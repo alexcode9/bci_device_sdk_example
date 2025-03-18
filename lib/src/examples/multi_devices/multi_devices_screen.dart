@@ -83,7 +83,7 @@ class MultiDevicesScreen extends StatelessWidget {
                         ),
                       );
                     } else {
-                      return const Center(child: Text('扫描设备列表为空'));
+                      return const Center(child: Text('No devices found'));
                     }
                   }),
             ],
@@ -170,7 +170,7 @@ class DeviceTile extends StatelessWidget {
             ElevatedButton(
                 onPressed: onTapConnect,
                 child: Text(
-                  '手动重连',
+                  'Manual Reconnect',
                   style: Theme.of(context)
                       .primaryTextTheme
                       .labelLarge!
@@ -180,7 +180,7 @@ class DeviceTile extends StatelessWidget {
             ElevatedButton(
                 onPressed: onTapUnbind,
                 child: Text(
-                  '解除配对',
+                  'Unpair',
                   style: Theme.of(context)
                       .primaryTextTheme
                       .labelLarge!

@@ -28,7 +28,7 @@ class OxyZenOtaScreen extends StatelessWidget {
                       initialData: BciDeviceProxy.instance.state,
                       stream: BciDeviceProxy.instance.onStateChanged,
                       builder: (context, snapshot) => StatusText(
-                        title: '头环状态',
+                        title: 'Headband Status',
                         value: snapshot.data!.debugDescription,
                         highlighted: !snapshot.data!.isConnected,
                       ),
@@ -37,7 +37,7 @@ class OxyZenOtaScreen extends StatelessWidget {
                       initialData: BciDeviceProxy.instance.batteryLevel,
                       stream: BciDeviceProxy.instance.onBatteryLevelChanged,
                       builder: (context, snapshot) => StatusText(
-                        title: '电量',
+                        title: 'Battery',
                         value: '${BciDeviceProxy.instance.batteryLevel}%',
                         highlighted: BciDeviceProxy.instance.batteryLevel <= 0,
                       ),

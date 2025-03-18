@@ -42,7 +42,7 @@ class CrimsonDeviceScreen extends StatelessWidget {
                   await BciDeviceManager.unbind();
                   Get.back();
                 },
-                child: Text('解除配对')),
+                child: Text('Unpair')),
           ]),
       body: CrimsonDataWidget(),
     );
@@ -72,7 +72,7 @@ class _CrimsonDataWidgetState extends State<CrimsonDataWidget> {
                   initialData: BciDeviceProxy.instance.state,
                   stream: BciDeviceProxy.instance.onStateChanged,
                   builder: (context, snapshot) => StatusText(
-                    title: '头环状态',
+                    title: 'Headband Status',
                     value: snapshot.data!.debugDescription,
                     highlighted: !snapshot.data!.isConnected,
                   ),
@@ -81,7 +81,7 @@ class _CrimsonDataWidgetState extends State<CrimsonDataWidget> {
                   initialData: BciDeviceProxy.instance.batteryLevel,
                   stream: BciDeviceProxy.instance.onBatteryLevelChanged,
                   builder: (context, snapshot) => StatusText(
-                    title: '电量',
+                    title: 'Battery',
                     value: '${BciDeviceProxy.instance.batteryLevel}%',
                     highlighted: BciDeviceProxy.instance.batteryLevel <= 0,
                   ),
@@ -121,7 +121,7 @@ class _CrimsonDataWidgetState extends State<CrimsonDataWidget> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SegmentWidget(
-                      segments: ['EEG', 'ACC', 'GYRO', '指数'].asMap(),
+                      segments: ['EEG', 'ACC', 'GYRO', 'Index'].asMap(),
                       selectedIndex: controller.tabIndex),
                   const SizedBox(height: 10),
                   chartWidget(controller.tabIndex.value),
@@ -205,7 +205,7 @@ class _CrimsonDataWidgetState extends State<CrimsonDataWidget> {
             ]),
             const SizedBox(height: 20),
             Obx(() => Text(
-                '${controller.deviceName.value}   固件版本：V${controller.firmware.value}')),
+                '${controller.deviceName.value}    Firmware Version: V${controller.firmware.value}')),
             ElevatedButton(
               onPressed: () async {
                 final result = await FilePicker.platform.pickFiles(

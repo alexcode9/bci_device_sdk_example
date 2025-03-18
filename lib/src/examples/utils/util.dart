@@ -8,10 +8,9 @@ export 'permission_util.dart';
 export 'shared_preference.dart';
 export 'validate_util.dart';
 
-/// 函数防抖
-///
-/// [func]: 要执行的方法
-/// [delay]: 要迟延的时长
+/// Function debounce
+/// [func]: Method to execute
+/// [delay]: Delay duration
 GestureTapCallback tapDebounce(
   Function func, {
   Duration delay = const Duration(milliseconds: 500),
@@ -28,9 +27,8 @@ GestureTapCallback tapDebounce(
   return target;
 }
 
-/// 函数节流
-///
-/// [func]: 要执行的方法
+/// Function throttle
+/// [func]: Method to execute
 Function throttle(
   Future Function() func,
 ) {

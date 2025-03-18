@@ -42,7 +42,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => AppBar().preferredSize;
 }
 
-///通用back按钮
+/// Common back button
 class MyBackButton extends StatelessWidget {
   final Color? color;
   final VoidCallback? onPressed;

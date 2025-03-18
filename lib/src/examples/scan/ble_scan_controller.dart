@@ -28,8 +28,9 @@ class BleScanController extends GetxController with StreamSubscriptionsMixin {
     }).subscribedBy(this);
 
     // NOTE: update the scan filter by business logic IN windows
-    // BleScanner.winScanningMode = WinScanningMode.passive; // for Crimson IN windows
-    BleScanner.winScanningMode = WinScanningMode.active; // for OxyZen IN windows
+    BleScanner.winScanningMode =
+        WinScanningMode.passive; // for Crimson IN windows
+    // BleScanner.winScanningMode = WinScanningMode.active; // for OxyZen IN windows
     BleScanner.ignoreRssi = false;
     BleScanner.resultExpiredMilliseconds = 3000;
     await BleScanner.instance.startScan();

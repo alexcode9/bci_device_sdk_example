@@ -37,7 +37,7 @@ class OxyZenOtaController extends GetxController with StreamSubscriptionsMixin {
       isFailed ||
       (isReady && device.isConnected && OxyZenDfu.newFirmwareAvailable);
 
-  final btnEnabled = true.obs; // 升级按钮是否可用
+  final btnEnabled = true.obs; // Whether upgrade button is enabled
   final otaProgress = 0.obs; // 0~1000
   final uploadSpeed = 0.0.obs; // K/s
 
@@ -58,7 +58,7 @@ class OxyZenOtaController extends GetxController with StreamSubscriptionsMixin {
     super.onClose();
   }
 
-  /// 升级按钮进度，[0~1]
+  /// Upgrade button progress, [0~1]
   double get btnProgress {
     return otaProgress.value.clamp(1, otaProgressMax) /
         otaProgressMax.toDouble();
@@ -70,20 +70,20 @@ class OxyZenOtaController extends GetxController with StreamSubscriptionsMixin {
     switch (otaState.value) {
       case OtaState.uploading:
         text =
-            '正在升级${inOtaPpg ? 'PPG模块' : ''}${(btnProgress * 100.0).toStringAsFixed(1)}%';
+            'Upgrading${inOtaPpg ? ' PPG Module' : ''}${(btnProgress * 100.0).toStringAsFixed(1)}%';
         break;
       case OtaState.uploadFinished:
       case OtaState.applying:
-        text = '正在重启${inOtaPpg ? 'PPG模块' : ''}...';
+        text = 'Restarting${inOtaPpg ? ' PPG Module' : ''}...';
         break;
       case OtaState.success:
-        text = '升级成功';
+        text = 'Upgrade successful';
         break;
       case OtaState.failed:
-        text = '升级失败，请稍后再试';
+        text = 'Upgrade failed, please try again later';
         break;
       case OtaState.idle:
-        text = '开始升级';
+        text = 'Start upgrade';
         break;
     }
     return text;
@@ -96,7 +96,7 @@ class OxyZenOtaController extends GetxController with StreamSubscriptionsMixin {
       Get.back();
       return true;
     }
-    ToastManager.show('固件升级中，请耐心等待');
+    ToastManager.show('Firmware upgrade in progress, please wait');
     return false;
   }
 
@@ -126,7 +126,8 @@ class OxyZenOtaController extends GetxController with StreamSubscriptionsMixin {
     }
     if (device.batteryLevel < OxyZenDfu.batteryLevelThreshold) {
       loggerApp.w('device is low battery, batteryLevel=${device.batteryLevel}');
-      ToastManager.show('请将设备充电至${OxyZenDfu.batteryLevelThreshold}%以上再开始升级');
+      ToastManager.show(
+          'Please charge the device to ${OxyZenDfu.batteryLevelThreshold}% before starting the upgrade');
       return;
     }
     clearOtaSubscriptions();

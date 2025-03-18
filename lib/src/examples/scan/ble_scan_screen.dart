@@ -80,7 +80,9 @@ class _FindDeviceScreen extends StatelessWidget {
                                 .map((r) => ScanResultWidget(r, context))
                                 .toList()));
                   } else {
-                    return const Center(child: Text('未找到设备，请确认设备处于配对状态'));
+                    return const Center(
+                        child: Text(
+                            'No devices found. Please make sure the device is in pairing mode'));
                   }
                 },
               ),

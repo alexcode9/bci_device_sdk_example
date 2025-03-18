@@ -66,7 +66,7 @@ class PermissionUtil {
             Get.back();
             await PermissionUtil.openPermission(p);
           },
-          child: Text('去开启'),
+          child: Text('Go to settings'),
         ),
       ],
     ));
@@ -97,11 +97,15 @@ class PermissionUtil {
       }
       final p = await blePermission;
       if (p == BciAppPermission.bluetooth) {
-        showDeniedDialog(context, '蓝牙未打开\n\n请先打开蓝牙', p);
+        showDeniedDialog(context,
+            'Bluetooth is not enabled\n\nPlease enable Bluetooth first', p);
         return false;
       }
       if (p == BciAppPermission.location) {
-        showDeniedDialog(context, '为了能够搜索到附近的蓝牙头环，需要开启定位权限', p);
+        showDeniedDialog(
+            context,
+            'Location permission is required to search for nearby Bluetooth headbands',
+            p);
         return false;
       }
     }

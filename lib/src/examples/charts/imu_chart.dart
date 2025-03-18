@@ -1,14 +1,10 @@
-import 'package:charts_flutter_new/flutter.dart' as charts;
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'eeg_chart.dart';
 
-final imuChartColors = [
-  charts.MaterialPalette.red.shadeDefault,
-  charts.MaterialPalette.green.shadeDefault,
-  charts.MaterialPalette.blue.shadeDefault
-];
+final imuChartColors = [Colors.red, Colors.green, Colors.blue];
 const imuChartTitles = ['x', 'y', 'z'];
 const eulerChartTitles = ['yaw', 'pitch', 'roll'];
 
@@ -72,7 +68,7 @@ class IMUChartWidget extends StatelessWidget {
                     Text(
                       e,
                       style: TextStyle(
-                        color: covertColor(imuChartColors[i]),
+                        color: imuChartColors[i],
                       ),
                     )))
                 .values
@@ -98,35 +94,64 @@ class IMUChartWidget extends StatelessWidget {
     });
   }
 
-  Color covertColor(charts.Color color) =>
-      Color.fromARGB(255, color.r, color.g, color.b);
-
   Widget lineChart() {
-    final data = [valuesX, valuesY, valuesZ];
-    final ids = [0, 1, 2]
-        .map((e) => '${chartType.toString()}-${imuChartTitles[e]}')
-        .toList();
-
-    return charts.LineChart(
-        [0, 1, 2]
-            .map((e) => toImuSeries(data[e], ids[e], imuChartColors[e]))
-            .toList(),
-        animate: false);
+    return LineChart(
+      LineChartData(
+        gridData: FlGridData(show: false),
+        titlesData: FlTitlesData(
+          leftTitles: AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              interval: 50,
+            ),
+          ),
+        ),
+        borderData: FlBorderData(
+          border: const Border(left: BorderSide(), bottom: BorderSide()),
+        ),
+        maxX: valuesX.length.toDouble(),
+        minX: 0,
+        lineBarsData: [
+          LineChartBarData(
+            spots: toSpots(valuesX),
+            color: imuChartColors[0],
+            barWidth: 1,
+            dotData: FlDotData(show: false),
+            belowBarData: BarAreaData(show: false),
+          ),
+          LineChartBarData(
+            spots: toSpots(valuesY),
+            color: imuChartColors[1],
+            barWidth: 1,
+            dotData: FlDotData(show: false),
+            belowBarData: BarAreaData(show: false),
+          ),
+          LineChartBarData(
+            spots: toSpots(valuesZ),
+            color: imuChartColors[2],
+            barWidth: 1,
+            dotData: FlDotData(show: false),
+            belowBarData: BarAreaData(show: false),
+          ),
+        ],
+      ),
+    );
   }
 }
 
-charts.Series<LinearValues, int> toImuSeries(
-    List<double> data, String id, charts.Color color) {
-  final list = <LinearValues>[];
-  for (var i = 0; i < data.length; i++) {
-    list.add(LinearValues(i, data[i]));
+List<FlSpot> toSpots(List<double> data) {
+  if (data.isEmpty) {
+    return [FlSpot.zero];
   }
 
-  return charts.Series<LinearValues, int>(
-    id: id,
-    colorFn: (_, __) => color,
-    domainFn: (LinearValues value, _) => value.x,
-    measureFn: (LinearValues value, _) => value.y,
-    data: list,
-  );
+  final list = <FlSpot>[];
+  for (var i = 0; i < data.length; i++) {
+    list.add(FlSpot(i.toDouble(), data[i]));
+  }
+  return list;
 }

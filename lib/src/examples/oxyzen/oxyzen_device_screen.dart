@@ -43,7 +43,7 @@ class OxyZenDeviceScreen extends StatelessWidget {
                   await BciDeviceManager.unbind();
                   Get.back();
                 },
-                child: Text('解除配对')),
+                child: Text('Unpair')),
           ]),
       body: OxyzenDataWidget(),
     );
@@ -114,7 +114,7 @@ class _OxyzenDataWidgetState extends State<OxyzenDataWidget> {
                 initialData: BciDeviceProxy.instance.state,
                 stream: BciDeviceProxy.instance.onStateChanged,
                 builder: (context, snapshot) => StatusText(
-                  title: '头环状态',
+                  title: 'Headband Status',
                   value: snapshot.data!.debugDescription,
                   highlighted: !snapshot.data!.isConnected,
                 ),
@@ -123,7 +123,7 @@ class _OxyzenDataWidgetState extends State<OxyzenDataWidget> {
                 initialData: BciDeviceProxy.instance.batteryLevel,
                 stream: BciDeviceProxy.instance.onBatteryLevelChanged,
                 builder: (context, snapshot) => StatusText(
-                  title: '电量',
+                  title: 'Battery',
                   value: '${BciDeviceProxy.instance.batteryLevel}%',
                   highlighted: BciDeviceProxy.instance.batteryLevel <= 0,
                 ),
@@ -137,7 +137,7 @@ class _OxyzenDataWidgetState extends State<OxyzenDataWidget> {
                   stream: BciDeviceProxy.instance.onMeditation
                       .map((value) => value.toStringAsFixed(1)),
                   builder: (context, snapshot) => StatusText(
-                    title: '正念指数',
+                    title: 'Mindfulness Index',
                     value: snapshot.data!,
                   ),
                 ),
@@ -146,7 +146,7 @@ class _OxyzenDataWidgetState extends State<OxyzenDataWidget> {
                   stream: BciDeviceProxy.instance.onCalmness
                       .map((value) => value.toStringAsFixed(1)),
                   builder: (context, snapshot) => StatusText(
-                    title: '平静指数',
+                    title: 'Calmness Index',
                     value: snapshot.data!,
                   ),
                 ),
@@ -155,7 +155,7 @@ class _OxyzenDataWidgetState extends State<OxyzenDataWidget> {
                   stream: BciDeviceProxy.instance.onAwareness
                       .map((value) => value.toStringAsFixed(1)),
                   builder: (context, snapshot) => StatusText(
-                    title: '觉察指数',
+                    title: 'Awareness Index',
                     value: snapshot.data!,
                   ),
                 ),
@@ -164,7 +164,7 @@ class _OxyzenDataWidgetState extends State<OxyzenDataWidget> {
                   stream: BciDeviceProxy.instance.onDrowsiness
                       .map((value) => value.toStringAsFixed(1)),
                   builder: (context, snapshot) => StatusText(
-                    title: '困倦指数',
+                    title: 'Drowsiness Index',
                     value: snapshot.data!,
                   ),
                 ),
@@ -173,7 +173,7 @@ class _OxyzenDataWidgetState extends State<OxyzenDataWidget> {
                   builder: (context, snapshot) => snapshot.data == null
                       ? Spacer()
                       : StatusText(
-                          title: '睡眠分期',
+                          title: 'Sleep Stage',
                           value: snapshot.data!.stage.name,
                         ),
                 ),
@@ -282,7 +282,7 @@ class _OxyzenDataWidgetState extends State<OxyzenDataWidget> {
             Column(
               children: [
                 Obx(() => Text(
-                    '${BciDeviceProxy.instance.name}   固件版本：V${controller.firmware.value}')),
+                    '${BciDeviceProxy.instance.name}   Firmware Version: V${controller.firmware.value}')),
                 Obx(() => Text('FilePath: ${ConfigController.filePath.value}')),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

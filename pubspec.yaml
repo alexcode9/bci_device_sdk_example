@@ -4,7 +4,7 @@ description: Demonstrates how to use the bci_device_sdk plugin.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -35,7 +35,7 @@ dependencies:
       url: https://dart-pub.brainco.cn
 
   fl_chart: ^0.66.1 # 0.66.0 from Flutter 3.16
-  charts_flutter_new: ^0.12.0
+  # charts_flutter_new: ^0.12.0
   flutter_easyloading: ^3.0.5
   get: ^4.6.6 # 4.6.6 from Flutter 3.13
   flutter_switch: ^0.3.2
@@ -58,7 +58,6 @@ dependency_overrides:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

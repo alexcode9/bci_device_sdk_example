@@ -35,15 +35,16 @@ class ScanResultWidget extends StatelessWidget {
       result: result,
       onTap: () async {
         try {
-          await EasyLoading.show(status: '配对中...');
+          await EasyLoading.show(status: 'Pairing...');
           await BleDeviceManager.bindScanResult(result);
-          await EasyLoading.showSuccess('配对成功!');
-          await Get.off(() =>
-              result.deviceType.isOxyZen ? OxyZenDeviceScreen() : CrimsonDeviceScreen());
+          await EasyLoading.showSuccess('Pairing successful!');
+          await Get.off(() => result.deviceType.isOxyZen
+              ? OxyZenDeviceScreen()
+              : CrimsonDeviceScreen());
         } catch (e, st) {
           loggerApp.i('$e');
           debugPrintStack(stackTrace: st, maxFrames: 7);
-          await EasyLoading.showError('配对失败');
+          await EasyLoading.showError('Pairing failed');
           await BleScanner.instance.startScan(); //restart scan
         }
       },
@@ -140,7 +141,7 @@ class ScanResultTile extends StatelessWidget {
         // color: Colors.black,
         // textColor: Colors.white,
         onPressed: (result.advertisementData.connectable) ? onTap : null,
-        child: const Text('配对'),
+        child: const Text('Pair'),
       ),
       children: <Widget>[
         _buildAdvRow(

@@ -1,4 +1,4 @@
-import 'package:charts_flutter_new/flutter.dart' as charts;
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bci_device_sdk/bci_device_sdk.dart';
@@ -22,49 +22,72 @@ class PpgChartWidget extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           SizedBox(height: 5),
-          // controller.ppgValues.isEmpty
-          //     ? const Text('Empty Chart')
-          //     : Container(
-          //         width: double.infinity,
-          //         height: 200,
-          //         padding: const EdgeInsets.all(12),
-          //         color: Theme.of(context).primaryColor.withAlpha(0x15),
-          //         child: chart(controller.ppgValues),
-          //       ),
+          controller.ppgValues.isEmpty
+              ? const Text('Empty Chart')
+              : Container(
+                  width: double.infinity,
+                  height: 200,
+                  padding: const EdgeInsets.all(12),
+                  color: Theme.of(context).primaryColor.withAlpha(0x15),
+                  child: chart(controller.ppgValues),
+                ),
         ],
       ),
     );
   }
 
   Widget chart(RxList<PpgRawModel> values) {
-    return charts.LineChart(toPPGSeries(values), animate: false);
+    return LineChart(
+      LineChartData(
+        gridData: FlGridData(show: false),
+        titlesData: FlTitlesData(
+          leftTitles: AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              interval: 50,
+            ),
+          ),
+        ),
+        borderData: FlBorderData(
+          border: const Border(left: BorderSide(), bottom: BorderSide()),
+        ),
+        maxX: values.length.toDouble(),
+        minX: 0,
+        lineBarsData: [
+          LineChartBarData(
+            spots: toSpots(values, (model) => model.hr.toDouble()),
+            color: Colors.blue,
+            barWidth: 1,
+            dotData: FlDotData(show: false),
+            belowBarData: BarAreaData(show: false),
+          ),
+          LineChartBarData(
+            spots: toSpots(values, (model) => model.spO2.toDouble()),
+            color: Colors.red,
+            barWidth: 1,
+            dotData: FlDotData(show: false),
+            belowBarData: BarAreaData(show: false),
+          ),
+        ],
+      ),
+    );
   }
 }
 
-List<charts.Series<LinearValues, int>> toPPGSeries(List<PpgRawModel> data) {
-  final hrList = <LinearValues>[];
-  for (var i = 0; i < data.length; i++) {
-    hrList.add(LinearValues(i, data[i].hr.toDouble()));
-  }
-  final spO2List = <LinearValues>[];
-  for (var i = 0; i < data.length; i++) {
-    spO2List.add(LinearValues(i, data[i].spO2.toDouble()));
+List<FlSpot> toSpots(
+    List<PpgRawModel> data, double Function(PpgRawModel) valueFn) {
+  if (data.isEmpty) {
+    return [FlSpot.zero];
   }
 
-  return [
-    charts.Series<LinearValues, int>(
-      id: 'PPG-HR',
-      colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-      domainFn: (LinearValues value, _) => value.x,
-      measureFn: (LinearValues value, _) => value.y,
-      data: hrList,
-    ),
-    charts.Series<LinearValues, int>(
-      id: 'PPG-SpO2',
-      colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-      domainFn: (LinearValues value, _) => value.x,
-      measureFn: (LinearValues value, _) => value.y,
-      data: spO2List,
-    ),
-  ];
+  final list = <FlSpot>[];
+  for (var i = 0; i < data.length; i++) {
+    list.add(FlSpot(i.toDouble(), valueFn(data[i])));
+  }
+  return list;
 }

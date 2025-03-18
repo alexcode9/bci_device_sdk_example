@@ -22,11 +22,13 @@ export 'package:get/get.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppLogger.init(level: Level.INFO);
+
   /// register device plugin
   await BciDevicePluginRegistry.init({
     CrimsonPluginRegistry(), // comment this if not use Crimson
     OxyZenPluginRegistry(), // comment this if not use OxyZen
   });
+
   /// register data mode
   BciDeviceConfig.setAvailableModes({
     BciDeviceDataMode.attention, // comment this if not use
@@ -133,7 +135,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class HomeScreenController extends GetxController {
-  static const demoTitle = '脑电设备DEMO';
+  static const demoTitle = 'EEG Device Demo';
   final buildInfo = demoTitle.obs;
 
   @override
@@ -171,7 +173,7 @@ Future<bool> _onWillPop() async {
       return true;
     } else {
       _popTimestamp = DateTime.now().millisecondsSinceEpoch;
-      loggerApp.i('再按一次退出');
+      loggerApp.i('Press again to exit');
       // ToastProvider.instance.show('再按一次退出');
       return false;
     }

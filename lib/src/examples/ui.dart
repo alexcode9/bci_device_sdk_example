@@ -6,7 +6,7 @@ import 'package:bci_device_sdk_example/logger.dart';
 import 'package:bci_device_sdk_example/main.dart';
 import 'package:bci_device_sdk_example/src/examples/constants/constant.dart';
 
-/// 默认1倍
+/// Default 1x
 extension SizeRatio on num {
   double get scale {
     return ratio * ScreenUtil.designScale;
