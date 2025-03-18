@@ -48,7 +48,7 @@ dependencies:
   group_button: ^5.0.1
   wakelock_plus: ^1.1.1
   url_launcher: ^6.1.12
-  file_picker: ^5.3.3
+  file_picker: ^9.2.0
   provider: ^6.0.5
   dropdown_button2: ^1.4.0
 
